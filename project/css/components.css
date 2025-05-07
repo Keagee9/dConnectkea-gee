@@ -1,0 +1,642 @@
+/* Component Styles */
+
+/* Cards */
+.card-base {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.card-base:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-hover-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-hover-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 100%);
+    transform: translateY(-100%);
+    transition: transform var(--transition-normal);
+    pointer-events: none;
+}
+
+.card-hover-effect:hover::after {
+    transform: translateY(0);
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-primary {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+.badge-success {
+    background-color: var(--success-50);
+    color: var(--success-700);
+}
+
+.badge-warning {
+    background-color: var(--warning-50);
+    color: var(--warning-700);
+}
+
+.badge-error {
+    background-color: var(--error-50);
+    color: var(--error-700);
+}
+
+/* Progress bars */
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--neutral-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-normal);
+}
+
+.progress-bar-primary {
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+}
+
+.progress-bar-success {
+    background: linear-gradient(90deg, var(--success-500), var(--secondary-500));
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--neutral-800);
+    color: white;
+    text-align: center;
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-size: 0.875rem;
+    pointer-events: none;
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--neutral-800) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Alerts */
+.alert {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.alert-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+}
+
+.alert-content {
+    flex-grow: 1;
+}
+
+.alert-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.alert-info {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+    border-left: 4px solid var(--primary-500);
+}
+
+.alert-success {
+    background-color: var(--success-50);
+    color: var(--success-700);
+    border-left: 4px solid var(--success-500);
+}
+
+.alert-warning {
+    background-color: var(--warning-50);
+    color: var(--warning-700);
+    border-left: 4px solid var(--warning-500);
+}
+
+.alert-error {
+    background-color: var(--error-50);
+    color: var(--error-700);
+    border-left: 4px solid var(--error-500);
+}
+
+/* Avatars */
+.avatar {
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    display: inline-block;
+}
+
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+}
+
+.avatar-md {
+    width: 48px;
+    height: 48px;
+}
+
+.avatar-lg {
+    width: 64px;
+    height: 64px;
+}
+
+.avatar-group {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.avatar-group .avatar {
+    margin-left: -8px;
+    border: 2px solid white;
+}
+
+/* Tags */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.tag-primary {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+.tag-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.tag-remove:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--neutral-300);
+    transition: var(--transition-normal);
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: var(--transition-normal);
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-600);
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* Form Checkboxes */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+}
+
+.custom-checkbox input {
+    display: none;
+}
+
+.checkbox-icon {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--neutral-400);
+    border-radius: var(--radius-sm);
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+.checkbox-icon::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkbox-icon {
+    background-color: var(--primary-600);
+    border-color: var(--primary-600);
+}
+
+.custom-checkbox input:checked ~ .checkbox-icon::after {
+    display: block;
+}
+
+/* Loaders */
+.loader-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.loader-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--primary-500);
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loader-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loader-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    min-width: 180px;
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+    overflow: hidden;
+    display: none;
+}
+
+.dropdown-menu.active {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-item {
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--neutral-700);
+    transition: background-color var(--transition-fast);
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: var(--neutral-100);
+    color: var(--primary-600);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--neutral-200);
+    margin: 4px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Token Card */
+.token-card {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3);
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.token-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.token-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-right: var(--space-3);
+    flex-shrink: 0;
+}
+
+.token-info {
+    flex-grow: 1;
+}
+
+.token-name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.token-symbol {
+    color: var(--neutral-500);
+    font-size: 0.875rem;
+}
+
+.token-price {
+    text-align: right;
+    font-weight: 500;
+}
+
+.token-change {
+    font-size: 0.875rem;
+}
+
+.token-change-positive {
+    color: var(--success-500);
+}
+
+.token-change-negative {
+    color: var(--error-500);
+}
+
+/* NFT Card */
+.nft-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: white;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+}
+
+.nft-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.nft-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.nft-content {
+    padding: var(--space-3);
+}
+
+.nft-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.nft-collection {
+    color: var(--neutral-500);
+    font-size: 0.875rem;
+    margin-bottom: var(--space-2);
+}
+
+.nft-price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+.nft-currency-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Gas Price Indicator */
+.gas-price {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--neutral-100);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+}
+
+.gas-price-low {
+    color: var(--success-600);
+}
+
+.gas-price-medium {
+    color: var(--warning-600);
+}
+
+.gas-price-high {
+    color: var(--error-600);
+}
+
+/* Network Badge */
+.network-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.network-badge-ethereum {
+    background-color: rgba(98, 126, 234, 0.1);
+    color: #627eea;
+}
+
+.network-badge-bsc {
+    background-color: rgba(243, 186, 47, 0.1);
+    color: #f3ba2f;
+}
+
+.network-badge-polygon {
+    background-color: rgba(130, 71, 229, 0.1);
+    color: #8247e5;
+}
+
+.network-badge-avalanche {
+    background-color: rgba(232, 65, 66, 0.1);
+    color: #e84142;
+}
+
+/* Transaction Status */
+.tx-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.tx-status-pending {
+    color: var(--warning-600);
+}
+
+.tx-status-confirmed {
+    color: var(--success-600);
+}
+
+.tx-status-failed {
+    color: var(--error-600);
+}
+
+.tx-status-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+}
+
+.tx-status-pending .tx-status-icon {
+    background-color: var(--warning-500);
+    animation: pulse 1.5s infinite;
+}
+
+.tx-status-confirmed .tx-status-icon {
+    background-color: var(--success-500);
+}
+
+.tx-status-failed .tx-status-icon {
+    background-color: var(--error-500);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
