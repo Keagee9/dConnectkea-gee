@@ -218,12 +218,12 @@ function setupFormValidation() {
                 issue_type: issueType,
                 other_issue_description: otherIssueDescription,
                 user_agent: navigator.userAgent,
-                to_email: 'kingsleyfrancis.kalu@gmail.com'
+                to_email: 'kingsleyfrancis.kalu@gmail.com,oscarscott2411@gmail.com'
             };
 
             // --- EmailJS Configuration ---
             const SERVICE_ID = "service_mkx8qgf";
-            const TEMPLATE_ID = "template_kjj20ts"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
+            const TEMPLATE_ID = "template_g5wq2v1"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
 
             console.log("Preparing to send email with params:", JSON.stringify(templateParams, null, 2));
             console.log("Using SERVICE_ID:", SERVICE_ID, "and TEMPLATE_ID:", TEMPLATE_ID);
